@@ -1,38 +1,68 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import { Router, Route, Switch } from 'wouter';
+import Audio from './Audio';
+import Excel from './Excel';
+import Home from './Home';
+import PowerPoint from './PowerPoint';
+import PDF from './PDF';
+import Video from './Video';
+import Wexbim from './Wexbim';
+import Word from './Word';
 
 function App() {
-  // Create the count state.
-  const [count, setCount] = useState(0);
-  // Create the counter (+1 every second).
-  useEffect(() => {
-    const timer = setTimeout(() => setCount(count + 1), 1000);
-    return () => clearTimeout(timer);
-  }, [count, setCount]);
-  // Return the App component.
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.jsx</code> and save to reload.
-        </p>
-        <p>
-          Page has been open for <code>{count}</code> seconds.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </p>
-      </header>
-    </div>
+    <main className="main-grid">
+      <div className="header">
+        <h1
+          className="header-title"
+          onClick={() => history.pushState('', 'Home', '/')}
+        >
+          React File Viewer
+        </h1>
+      </div>
+      <div className="examples">
+        <Router>
+          <Switch>
+            <Route path="/">
+              <Home />
+            </Route>
+
+            <Route path="/audio">
+              <Audio />
+            </Route>
+
+            <Route path="/excel">
+              <Excel />
+            </Route>
+
+            <Route path="/pdf">
+              <PDF />
+            </Route>
+
+            <Route path="/powerpoint">
+              <PowerPoint />
+            </Route>
+
+            <Route path="/video">
+              <Video />
+            </Route>
+
+            <Route path="/wexbim">
+              <Wexbim />
+            </Route>
+
+            <Route path="/word">
+              <Word />
+            </Route>
+
+            <Route path="/:rest*">
+              {(params) => `404, Sorry the page ${params.rest} does not exist!`}
+            </Route>
+          </Switch>
+        </Router>
+      </div>
+    </main>
   );
 }
 
